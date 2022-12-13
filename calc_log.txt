@@ -1,0 +1,21 @@
+дек. 13, 2022 11:39:03 PM Calculator main
+INFO: 123 - 2 = 121.0
+
+дек. 13, 2022 11:39:03 PM Calculator main
+INFO: 11 * 5 = 55.0
+
+дек. 13, 2022 11:39:03 PM Calculator main
+INFO: 12 / 3 = 4.0
+
+дек. 13, 2022 11:39:03 PM Calculator main
+INFO: 113 + 345 = 458.0
+
+дек. 13, 2022 11:39:03 PM Calculator main
+INFO: 12 - f = Error! Not number
+
+дек. 13, 2022 11:39:03 PM Calculator main
+INFO: 12 j 3 = Operation Error!
+
+дек. 13, 2022 11:39:03 PM Calculator main
+INFO: 10 / 0 = Error! Division by zero
+
