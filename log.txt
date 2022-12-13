@@ -1,0 +1,6 @@
+дек. 13, 2022 12:05:21 AM DigitArray main
+INFO: [5, 6, 2, 9, 9]
+дек. 13, 2022 12:05:22 AM DigitArray main
+INFO: [5, 2, 6, 9, 9]
+дек. 13, 2022 12:05:22 AM DigitArray main
+INFO: [2, 5, 6, 9, 9]
