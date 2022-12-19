@@ -93,24 +93,10 @@ public class OPN {
 
     public static ArrayList<String> solvePostfix(ArrayList<String> postfix) {
         String operators = "+-/*^";
-        if (postfix.size() == 3) {
-            switch (postfix.get(2)) {
-                case "+" ->
-                        postfix.set(0, String.valueOf(Double.parseDouble(postfix.get(0)) + Double.parseDouble(postfix.get(1))));
-                case "-" ->
-                        postfix.set(0, String.valueOf(Double.parseDouble(postfix.get(0)) - Double.parseDouble(postfix.get(1))));
-                case "*" ->
-                        postfix.set(0, String.valueOf(Double.parseDouble(postfix.get(0)) * Double.parseDouble(postfix.get(1))));
-                case "/" ->
-                        postfix.set(0, String.valueOf(Double.parseDouble(postfix.get(0)) / Double.parseDouble(postfix.get(1))));
-                case "^" ->
-                        postfix.set(0, String.valueOf(Math.pow(Double.parseDouble(postfix.get(0)), Double.parseDouble(postfix.get(1)))));
-            }
-            postfix.remove(1);
-            postfix.remove(1);
+        if (postfix.size() < 3) {
             return postfix;
         } else {
-            for (int i = 2; i < postfix.size() - 1; i++) {
+            for (int i = 2; i < postfix.size() ; i++) {
 
                 if (operators.contains(postfix.get(i))) {
                     switch (postfix.get(i)) {
