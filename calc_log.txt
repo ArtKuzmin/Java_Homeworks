@@ -1,0 +1,9 @@
+дек. 19, 2022 10:26:29 AM Calculator main
+INFO: 4 - 2 = 2.0
+
+дек. 19, 2022 10:26:35 AM Calculator main
+INFO: 43 / 4 = 10.75
+
+дек. 19, 2022 10:26:43 AM Calculator main
+INFO: (udo) 4 - 2 = 2.0
+

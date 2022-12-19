@@ -2,21 +2,50 @@ import java.util.*;
 
 //Реализовать алгоритм перевода из инфиксной записи в постфиксную для арифметического выражения.
 public class OPN {
-
     public static void main(String[] args) {
-//        String infix = "4 ^ 2 / 2 * (2 + 10)";
-//        System.out.println("Infix: " + infix);
-//        System.out.println("Postfix: 4 2 ^ 2 / 2 10 + *"); //для сравнения
-        ArrayList<String> postfix;// = toPostfix(infix);
-
-        String infix2 = "4 - 2 + 2 * (2 + 1)";
-        System.out.println("Infix2: " + infix2);
-        System.out.println("Postfix2: 4 2 - 2 2 1 + * +");
-        postfix = toPostfix(infix2);
+        ArrayList<String> postfix;
+//        Вариант для ввода инфиксной записи пользователем:
+//        System.out.println("Введите инфиксную запись с каждым символом через пробел:");
+//        Scanner sc = new Scanner(System.in);
+//        String infix = sc.nextLine();
+        String infix = "4 ^ 2 / 2 * (2 + 10)";
+        System.out.println("Infix: " + infix);
+        System.out.println("Reference Postfix: 4 2 ^ 2 / 2 10 + *"); //для сравнения
+        postfix = toPostfix(infix);
         System.out.print("Postfix: ");
         for (String ch : postfix) {
             System.out.print(ch + " ");
         }
+        System.out.println();
+        String infix2 = "4 - 2 + 2 * (2 + 1)";
+        System.out.println("Infix 2: " + infix2);
+        System.out.println("Reference Postfix 2: 4 2 - 2 2 1 + * +");
+        postfix = toPostfix(infix2);
+        System.out.print("Postfix 2: ");
+        for (String ch : postfix) {
+            System.out.print(ch + " ");
+        }
+    }
+
+    // Вычисляем приоритет знака для вычислений
+    public static boolean priority(String a, String b) {
+        boolean highA = a.equals("*") || a.equals("/");
+        boolean highB = b.equals("*") || b.equals("/");
+        boolean lowA = a.equals("+") || a.equals("-");
+        boolean lowB = b.equals("+") || b.equals("-");
+
+        if (a.equals("^") && !b.equals("^"))
+            return true;
+        else if (a.equals(b)) return false;
+        else if (highA && (!b.equals("^") && !highB))
+            return true;
+        else if ((lowA) && highB)
+            return false;
+        else if (highA && highB)
+            return false;
+        else if ((lowA) && lowB)
+            return false;
+        else return false;
     }
 
     public static ArrayList<String> toPostfix(String inf) {
@@ -31,7 +60,7 @@ public class OPN {
             } else if (operators.contains(s) && stack.size() == 0) {
                 stack.add(s);
             } else if (operators.contains(s)) {
-                if (!stack.contains("(") && priority(s, stack.peek())) {
+                if (!stack.contains("(") && !priority(s, stack.peekFirst())) {
                     postfix.add(stack.pollFirst());
                 }
                 stack.add(s);
@@ -48,16 +77,4 @@ public class OPN {
         }
         return postfix;
     }
-
-    public static boolean priority(String a, String b) {
-        if (a.equals("^"))
-            return true;
-        else if (a.equals("*") || a.equals("/") && !b.equals("^"))
-            return true;
-        else if(a.equals(b)) return true;
-        else if ((a.equals("+") | a.equals("-")) && (b.equals("*") | b.equals("/")))
-            return true;
-        else return false;
-    }
-
 }
