@@ -4,6 +4,7 @@ import java.util.*;
 public class OPN {
     public static void main(String[] args) {
         ArrayList<String> postfix;
+        ArrayList<String> result;
 //        Вариант для ввода инфиксной записи пользователем:
 //        System.out.println("Введите инфиксную запись с каждым символом через пробел:");
 //        Scanner sc = new Scanner(System.in);
@@ -17,6 +18,11 @@ public class OPN {
             System.out.print(ch + " ");
         }
         System.out.println();
+        result = solvePostfix(postfix);
+        System.out.print("Решение: " + result.get(0));
+        System.out.println();
+        System.out.println();
+
         String infix2 = "4 - 2 + 2 * (2 + 1)";
         System.out.println("Infix 2: " + infix2);
         System.out.println("Reference Postfix 2: 4 2 - 2 2 1 + * +");
@@ -25,6 +31,9 @@ public class OPN {
         for (String ch : postfix) {
             System.out.print(ch + " ");
         }
+        result = solvePostfix(postfix);
+        System.out.println();
+        System.out.print("Решение: " + result.get(0));
     }
 
     // Вычисляем приоритет знака для вычислений
@@ -36,7 +45,8 @@ public class OPN {
 
         if (a.equals("^") && !b.equals("^"))
             return true;
-        else if (a.equals(b)) return false;
+        else if (a.equals(b))
+            return false;
         else if (highA && (!b.equals("^") && !highB))
             return true;
         else if ((lowA) && highB)
@@ -60,8 +70,11 @@ public class OPN {
             } else if (operators.contains(s) && stack.size() == 0) {
                 stack.add(s);
             } else if (operators.contains(s)) {
-                if (!stack.contains("(") && !priority(s, stack.peekFirst())) {
-                    postfix.add(stack.pollFirst());
+                if (!stack.contains("(")) {
+                    assert stack.peekFirst() != null;
+                    if (!priority(s, stack.peekFirst())) {
+                        postfix.add(stack.pollFirst());
+                    }
                 }
                 stack.add(s);
             } else if (s.equals("(")) {
@@ -76,5 +89,48 @@ public class OPN {
             }
         }
         return postfix;
+    }
+
+    public static ArrayList<String> solvePostfix(ArrayList<String> postfix) {
+        String operators = "+-/*^";
+        if (postfix.size() == 3) {
+            switch (postfix.get(2)) {
+                case "+" ->
+                        postfix.set(0, String.valueOf(Double.parseDouble(postfix.get(0)) + Double.parseDouble(postfix.get(1))));
+                case "-" ->
+                        postfix.set(0, String.valueOf(Double.parseDouble(postfix.get(0)) - Double.parseDouble(postfix.get(1))));
+                case "*" ->
+                        postfix.set(0, String.valueOf(Double.parseDouble(postfix.get(0)) * Double.parseDouble(postfix.get(1))));
+                case "/" ->
+                        postfix.set(0, String.valueOf(Double.parseDouble(postfix.get(0)) / Double.parseDouble(postfix.get(1))));
+                case "^" ->
+                        postfix.set(0, String.valueOf(Math.pow(Double.parseDouble(postfix.get(0)), Double.parseDouble(postfix.get(1)))));
+            }
+            postfix.remove(1);
+            postfix.remove(1);
+            return postfix;
+        } else {
+            for (int i = 2; i < postfix.size() - 1; i++) {
+
+                if (operators.contains(postfix.get(i))) {
+                    switch (postfix.get(i)) {
+                        case "+" ->
+                                postfix.set(i, String.valueOf(Double.parseDouble(postfix.get(i - 2)) + Double.parseDouble(postfix.get(i - 1))));
+                        case "-" ->
+                                postfix.set(i, String.valueOf(Double.parseDouble(postfix.get(i - 2)) - Double.parseDouble(postfix.get(i - 1))));
+                        case "*" ->
+                                postfix.set(i, String.valueOf(Double.parseDouble(postfix.get(i - 2)) * Double.parseDouble(postfix.get(i - 1))));
+                        case "/" ->
+                                postfix.set(i, String.valueOf(Double.parseDouble(postfix.get(i - 2)) / Double.parseDouble(postfix.get(i - 1))));
+                        case "^" ->
+                                postfix.set(i, String.valueOf(Math.pow(Double.parseDouble(postfix.get(i - 2)), Double.parseDouble(postfix.get(i - 1)))));
+                    }
+                    postfix.remove(i - 1);
+                    postfix.remove(i - 2);
+                }
+            }
+            solvePostfix(postfix);
+            return postfix;
+        }
     }
 }
