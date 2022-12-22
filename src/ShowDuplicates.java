@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -18,8 +17,11 @@ public class ShowDuplicates {
             else map.put(str[0], map.get(str[0]) + 1);
         }
         Set<Map.Entry<String, Integer>> entries = map.entrySet();
-        for (Map.Entry<String, Integer> a : entries) {
-            System.out.println(a.getKey() + ": " + a.getValue().toString().replaceAll("\\[", "").replaceAll("\\]", ""));
+        for (int i = 0; i < map.size(); i++) {
+            for (Map.Entry<String, Integer> a : entries) {
+                if (a.getValue() == i)
+                    System.out.println(a.getKey() + ": " + a.getValue().toString().replaceAll("\\[", "").replaceAll("\\]", ""));
+            }
         }
     }
 }
