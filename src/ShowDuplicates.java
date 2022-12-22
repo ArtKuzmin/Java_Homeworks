@@ -13,11 +13,11 @@ public class ShowDuplicates {
             String name = sc.nextLine();
             String[] str = name.split(" ");
             if (!map.containsKey(str[0]))
-                map.put(str[0], 0);
+                map.put(str[0], 1);
             else map.put(str[0], map.get(str[0]) + 1);
         }
         Set<Map.Entry<String, Integer>> entries = map.entrySet();
-        for (int i = 0; i < map.size(); i++) {
+        for (int i = map.size() - 1; i >= 0; i--) {
             for (Map.Entry<String, Integer> a : entries) {
                 if (a.getValue() == i)
                     System.out.println(a.getKey() + ": " + a.getValue().toString().replaceAll("\\[", "").replaceAll("\\]", ""));
